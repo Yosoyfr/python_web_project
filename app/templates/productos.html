@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}Productos{% endblock %}
+{% block contenido %}
+<h2>Productos</h2>
+
+{% if session.get('usuario_id') %}
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Nuevo producto</h5>
+    <form method="post">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+        </div>
+        <div class="col-md-2">
+          <input type="text" name="precio" class="form-control" placeholder="Precio" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="descripcion" class="form-control" placeholder="Descripción">
+        </div>
+        <div class="col-md-2 d-grid">
+          <button type="submit" class="btn btn-success">Agregar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="row">
+  {% for p in productos %}
+  <div class="col-md-4 mb-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.nombre }}</h5>
+        <p class="card-text">{{ p.descripcion or "Sin descripción" }}</p>
+        <p class="fw-bold">Q {{ "%.2f"|format(p.precio) }}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <a href="{{ url_for('main.agregar_carrito', producto_id=p.id) }}" class="btn btn-sm btn-primary">Agregar al carrito</a>
+        {% if session.get('usuario_id') %}
+        <div>
+          <a href="{{ url_for('main.editar_producto', producto_id=p.id) }}" class="btn btn-sm btn-outline-secondary">Editar</a>
+          <a href="{{ url_for('main.eliminar_producto', producto_id=p.id) }}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>No hay productos creados aún.</p>
+  {% endfor %}
+</div>
+{% endblock %}

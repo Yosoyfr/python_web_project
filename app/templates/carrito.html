@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Carrito{% endblock %}
+{% block contenido %}
+<h2>Carrito de compras</h2>
+
+{% if productos %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th>Subtotal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in productos %}
+    <tr>
+      <td>{{ item.nombre }}</td>
+      <td>Q {{ "%.2f"|format(item.precio) }}</td>
+      <td>{{ item.cantidad }}</td>
+      <td>Q {{ "%.2f"|format(item.subtotal) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4>Total: Q {{ "%.2f"|format(total) }}</h4>
+<a href="{{ url_for('main.vaciar_carrito') }}" class="btn btn-warning mt-2">Vaciar carrito</a>
+{% else %}
+<p>No hay productos en el carrito.</p>
+{% endif %}
+{% endblock %}

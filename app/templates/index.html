@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<div class="text-center">
+    <h1 class="mb-3">Bienvenido al curso Python para Web</h1>
+    <p class="lead">Esta es la aplicación que construimos paso a paso durante las sesiones.</p>
+    <p>Regístrate, inicia sesión, crea productos y pruébalos en el carrito de compras.</p>
+    <a href="{{ url_for('auth.registro') }}" class="btn btn-primary mt-3">Comenzar</a>
+</div>
+{% endblock %}
